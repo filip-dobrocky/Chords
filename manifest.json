@@ -1,15 +1,15 @@
 {
     "architecture": "all",
-    "description": "description of ChordsList",
+    "description": "Guitar chords",
     "framework": "ubuntu-sdk-13.10",
     "hooks": {
-        "ChordsList": {
-            "apparmor": "ChordsList.json",
-            "desktop": "ChordsList.desktop"
+        "Chords": {
+            "apparmor": "Chords.json",
+            "desktop": "Chords.desktop"
         }
     },
-    "maintainer": "",
-    "name": "com.ubuntu.developer.username.chordslist",
-    "title": "ChordsList",
+    "maintainer": "Filip Dobrocký <filip.dobrocky@gmail.com>",
+    "name": "com.ubuntu.developer.filip-dobrocky.chords",
+    "title": "Chords",
     "version": "0.1"
 }
