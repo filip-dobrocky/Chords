@@ -58,6 +58,7 @@ Component {
                     text: i18n.tr("Welcome to")
                     fontSize: "large"
                     height: contentHeight
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Label {
@@ -65,6 +66,7 @@ Component {
                     font.bold: true
                     fontSize: "x-large"
                     height: contentHeight
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
         }
