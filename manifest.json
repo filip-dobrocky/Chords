@@ -4,12 +4,12 @@
     "framework": "ubuntu-sdk-13.10",
     "hooks": {
         "ChordsList": {
-            "apparmor": "Chords.json",
-            "desktop": "Chords.desktop"
+            "apparmor": "ChordsList.json",
+            "desktop": "ChordsList.desktop"
         }
     },
     "maintainer": "",
-    "name": "com.ubuntu.developer.filip-dobrocky.chords",
-    "title": "Chords",
+    "name": "com.ubuntu.developer.username.chordslist",
+    "title": "ChordsList",
     "version": "0.1"
 }
