@@ -31,7 +31,7 @@ MainView {
     id: mainView
 
     // Note! applicationName needs to match the "name" field of the click manifest
-    applicationName: "com.ubuntu.developer.filip-dobrocky.Chords"
+    applicationName: "com.ubuntu.developer.filip-dobrocky.chords"
 
     /*
      This property enables the application to change orientation
