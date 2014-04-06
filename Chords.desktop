@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Chords
+Exec=/usr/bin/qmlscene $@ /usr/share/Chords/Chords.qml
+Icon=Chords.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+Name[en_US]=Chords
