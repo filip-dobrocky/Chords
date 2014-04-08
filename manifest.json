@@ -1,7 +1,7 @@
 {
     "architecture": "all",
     "description": "Guitar chords",
-    "framework": "ubuntu-sdk-13.10",
+    "framework": "ubuntu-sdk-14.04-qml-dev1",
     "hooks": {
         "Chords": {
             "apparmor": "Chords.json",
@@ -11,5 +11,5 @@
     "maintainer": "Filip Dobrocký <filip.dobrocky@gmail.com>",
     "name": "com.ubuntu.developer.filip-dobrocky.chords",
     "title": "Chords",
-    "version": "0.1"
+    "version": "0.1.1"
 }
