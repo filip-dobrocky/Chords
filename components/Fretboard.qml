@@ -59,7 +59,7 @@ Item {
             model: numArrayFromTo(lowestFret(tones), lowestFret(tones) + 3)
 
             Label {
-                width: parent.width / 4
+                width: fretNumbersRow.width / 4
 
                 horizontalAlignment: Text.AlignHCenter
                 text: modelData
@@ -79,14 +79,15 @@ Item {
         color: "#CF000000"
 
         Item {
+            id: fretsItem
             anchors.fill: parent
 
             Repeater {
                 model: 3
 
                 Image {
-                    x: parent.width / 4 * (index + 1)
-                    width: units.gu(0.5); height: parent.height
+                    x: fretsItem.width / 4 * (index + 1)
+                    width: units.gu(0.5); height: fretsItem.height
                     opacity: 0.9
 
                     source: "../graphics/fret.png"
@@ -96,12 +97,13 @@ Item {
         }
 
         Row {
+            id: circleRow
             anchors.fill: parent
 
             Repeater {
                 model: numArrayFromTo(lowestFret(tones), lowestFret(tones) + 3)
                 Item {
-                    width: parent.width / 4; height: parent.height
+                    width: circleRow.width / 4; height: circleRow.height
 
                     Image {
                         width: units.gu(2.5); height: (modelData != 12) ? units.gu(2.5) : units.gu(15)
@@ -117,6 +119,7 @@ Item {
         }
 
         Item {
+            id: stringsItem
             width: parent.width; height: parent.height - units.gu(4)
             anchors.verticalCenter: parent.verticalCenter
 
@@ -124,8 +127,8 @@ Item {
                 model: ["E", "B", "G", "D", "A", "E"]
 
                 Item {
-                    width: parent.width
-                    y: parent.height / 5 * (index)
+                    width: stringsItem.width
+                    y: stringsItem.height / 5 * (index)
 
                     property int stringIndex: index
 
@@ -157,6 +160,7 @@ Item {
                     }
 
                     Row {
+                        id: tonesRow
                         anchors {
                             left: stringRect.left
                             right: stringRect.right
@@ -166,7 +170,7 @@ Item {
                         Repeater {
                             model: numArrayFromTo(lowestFret(tones), lowestFret(tones) + 3)
                             Item {
-                                width: parent.width / 4; height: units.gu(2.5)
+                                width: tonesRow.width / 4; height: units.gu(2.5)
 
                                 UbuntuShape {
                                     width: units.gu(2.5); height: units.gu(2.5)

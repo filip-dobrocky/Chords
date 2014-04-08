@@ -45,23 +45,21 @@ ListView {
                           properties: { chord: chord, modifier: modifier, color: color, text: text } } }, id)
     }
 
-    U1db.Database { id: db; path: "chords.u1db" }
-
-    U1db.Index {
-        id: dbIndex
-        database: db
-        expression: [ "progression.name" ]
-    }
+    //U1db.Database { id: db; path: "chords.u1db" }
 
     U1db.Query {
         id: progression
-        index: dbIndex
-        query:  [ { name: progressionName } ]
+        index: U1db.Index {
+            name: "progressionIndex"
+            database: db
+            expression: [ "progression.name", "progression.properties" ] //, "progression.properties.chord", "progression.properties.modifier", "progression.properties.color", "progression.properties.text"
+        }
+        query: [ progressionName, "*" ]
     }
 
     clip: true
 
-    model: progression
+    model: progression.results
 
     delegate: ListItem.Empty {
         id: chordListItem
@@ -72,16 +70,16 @@ ListView {
 
         onItemRemoved: {
             //positionViewAtIndex(index + 1, ListView.Visible)
-            db.deleteDoc(model.docId)
+            db.deleteDoc(progression.documents[index])
         }
         onClicked: {
-            selectedChord = model.contents.progression.properties.chord
-            selectedModifier = model.contents.progression.properties.modifier
-            selectedColor = model.contents.progression.properties.color
+            selectedChord = modelData.properties.chord
+            selectedModifier = modelData.properties.modifier
+            selectedColor = modelData.properties.color
             PopupUtils.open(chordViewSheetComponent)
         }
         onPressAndHold: {
-            editDocId = model.docId
+            editDocId = progression.documents[index]
             PopupUtils.open(actionPopoverComponent, chordListItem)
         }
         onPressedChanged: chordShape.color.a += (!pressed) ? 0.1 : -0.1
@@ -98,7 +96,7 @@ ListView {
                 width: parent.width
                 visible: (text != "")
 
-                text: model.contents.progression.properties.text
+                text: modelData.properties.text
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
 
@@ -106,15 +104,15 @@ ListView {
                 id: chordShape
                 width: parent.width; height: (chordText.visible) ? parent.height - chordText.height - units.gu(1) : parent.height
 
-                color: model.contents.progression.properties.color
+                color: modelData.properties.color
                 Component.onCompleted: color.a -= 0.15
 
                 Label {
                     anchors.centerIn: parent
 
-                    text: "<b>" + model.contents.progression.properties.chord + "</b> "
-                          + ((model.contents.progression.properties.modifier != "*") ?
-                              model.contents.progression.properties.modifier : "")
+                    text: "<b>" + modelData.properties.chord + "</b> "
+                          + ((modelData.properties.modifier != "*") ?
+                              modelData.properties.modifier : "")
                     fontSize: "large"
                     color: "white"
                 }
@@ -146,6 +144,7 @@ ListView {
 
     footer: ListItem.Standard {
         visible: (progressionName != "")
+        y: contentHeight
 
         text: i18n.tr("Add chord")
         iconSource: Qt.resolvedUrl("../graphics/add.svg")
@@ -195,7 +194,7 @@ ListView {
                         width: (parent.width - units.gu(1)) / 2; height: parent.height
 
                         model: AllChordModel { }
-                        delegate: OptionSelectorDelegate { text: model.chord }
+                        delegate: OptionSelectorDelegate { text: chord }
                     }
 
                     OptionSelector {
@@ -245,7 +244,7 @@ ListView {
                         width: (parent.width - units.gu(1)) / 2; height: parent.height
 
                         model: AllChordModel { }
-                        delegate: OptionSelectorDelegate { text: model.chord }
+                        delegate: OptionSelectorDelegate { text: chord }
                         selectedIndex: model.getIndexByChord(doc.progression.properties.chord)
                     }
 

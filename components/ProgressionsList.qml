@@ -42,46 +42,41 @@ ListView {
 
     function containsProgression(name) {
         for (var i = 0; i < model.results.length; i++)
-            if (model.results[i].progressions.name == name) return true
+            if (model.results[i].name == name) return true
         return false
     }
 
     //property string renameId
 
-    U1db.Database { id: db; path: "chords.u1db" }
-
-    U1db.Index {
-        id: dbIndex
-        database: db
-        expression: [ "progressions.name" ]
-    }
-
-    U1db.Query {
-        id: progressions
-        index: dbIndex
-    }
+    //U1db.Database { id: db; path: "chords.u1db" }
 
     clip: true
 
-    model: progressions
+    model: U1db.Query {
+        index: U1db.Index {
+            name: "progressionsIndex"
+            database: db
+            expression: [ "progressions.name" ]
+        }
+    }
 
     delegate: ListItem.Standard {
         id: progressionListItem
-        text: model.contents.progressions.name
+        text: contents.name
         removable: true
         confirmRemoval: true
 
         onItemRemoved: {
-            if (progressionView.progressionName == model.contents.progressions.name) progressionView.progressionName = ""
-            deleteProgression(model.docId)
+            if (progressionView.progressionName == contents.name) progressionView.progressionName = ""
+            deleteProgression(docId)
         }
 
         onClicked: {
             if (progressionLayouts.currentLayout == "phone") pageStack.push(progressionPage,
-                                                                            { progressionName: model.contents.progressions.name,
-                                                                             progressionId: model.docId })
-            progressionView.progressionName = model.contents.progressions.name
-            progressionView.progressionId = model.docId
+                                                                            { progressionName: contents.name,
+                                                                             progressionId: docId })
+            progressionView.progressionName = contents.name
+            progressionView.progressionId = docId
         }
 
         /*onPressAndHold: {
